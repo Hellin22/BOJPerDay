@@ -3,6 +3,10 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class Main {
+    // 배운점
+    // 1. sc.nextLine 외에는 개행문자를 처리하지 않는다.
+    //    따라서 sc.nextInt를 한 후에 새로운 것을 받아올때는
+    //    sc.nextLine으로 개행문자를 처리해주고 받아와야한다.
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
