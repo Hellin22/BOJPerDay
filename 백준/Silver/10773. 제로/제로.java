@@ -3,6 +3,8 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class Main {
+    // 배운점
+    // 1. stack을 사용하지 않고 idx을 사용해도 풀 수 있는 문제
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
