@@ -33,7 +33,8 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
         for(int i = 0; i < n; i++){
-
+            // pair p = new pair(Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()));
+            // br.readLine은 한줄을 읽어옴 -> 3 4인 경우에는 StringTokenizer로 분할해서 줘야함.
             st= new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
