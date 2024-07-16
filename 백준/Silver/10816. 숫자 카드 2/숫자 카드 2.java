@@ -1,13 +1,21 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
         HashMap<Integer, Integer> map = new HashMap<>();
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
+        int n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            int x = in.nextInt();
+
+            int x = Integer.parseInt(st.nextToken());
             if(map.containsKey(x)) {
                 map.put(x, map.get(x) + 1);
             }else{
@@ -15,9 +23,10 @@ public class Main {
             }
         }
         StringBuilder stringBuilder = new StringBuilder();
-        int m = in.nextInt();
+        int m = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
         for (int i = 0; i < m; i++) {
-            int x = in.nextInt();
+            int x = Integer.parseInt(st.nextToken());
             if(map.containsKey(x)) {
                 stringBuilder.append(map.get(x) + " ");
             }else {
