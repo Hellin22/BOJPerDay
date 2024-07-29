@@ -14,7 +14,6 @@ class Main {
     static int n, m;
     static int[] alphabet = new int[26];
     static int maxCnt = 1;
-    static int curCnt = 1;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,12 +33,13 @@ class Main {
         // 0, 0을 지나야함.
         isvisited[0][0] = 1;
         alphabet[arr[0][0]] = 1;
-        dfs(0, 0);
+        dfs(0, 0, 1);
 
         System.out.println(maxCnt);
+        br.close();
     }
 
-    public static void dfs(int x, int y){
+    public static void dfs(int x, int y, int cnt){
 
         for(int i = 0; i < 4; i++){
             int nx = x + dx[i];
@@ -50,13 +50,10 @@ class Main {
 
             alphabet[arr[nx][ny]] = 1;
             isvisited[nx][ny] = 1;
-            curCnt++;
-            maxCnt = Math.max(maxCnt, curCnt);
-
-            dfs(nx, ny);
+            maxCnt = Math.max(maxCnt, cnt + 1);
+            dfs(nx, ny, cnt + 1);
             alphabet[arr[nx][ny]] = 0;
             isvisited[nx][ny] = 0;
-            curCnt--;
         }
     }
 
