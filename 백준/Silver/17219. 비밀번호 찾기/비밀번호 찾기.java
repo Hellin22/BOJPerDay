@@ -17,7 +17,7 @@ public class Main {
             map.put(st.nextToken(), st.nextToken());
         }
 
-        for(int i = 0; i < m; i++) sb.append(map.get(br.readLine()) + "\n");
+        for(int i = 0; i < m; i++) sb.append(map.get(br.readLine())).append("\n");
 
         System.out.println(sb);
     }
