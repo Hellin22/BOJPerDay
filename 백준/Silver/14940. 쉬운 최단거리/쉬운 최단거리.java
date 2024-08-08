@@ -20,8 +20,6 @@ public class Main {
         int[] start = new int[2];
         int[] dx = {0, 1, 0, -1};
         int[] dy = {1, 0, -1, 0};
-        // 벽 좌표 담아둘 공간
-        ArrayList<int[]> wall = new ArrayList<>();
 
         for(int i = 0; i < n; i++){
             String[] strs = br.readLine().split(" ");
@@ -34,7 +32,9 @@ public class Main {
                     start[0] = i;
                     start[1] = j;
                 }
-                if(arr[i][j] == 0) wall.add(new int[]{i, j}); // 마지막에 wall 좌표에 대한 dist 초기화
+                if(arr[i][j] == 0) {
+                    dist[i][j] = 0;
+                }
             }
         }
 
@@ -57,8 +57,6 @@ public class Main {
             }
         }
 
-        for(int i = 0; i < wall.size(); i++) dist[wall.get(i)[0]][wall.get(i)[1]] = 0;
-        
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++){
