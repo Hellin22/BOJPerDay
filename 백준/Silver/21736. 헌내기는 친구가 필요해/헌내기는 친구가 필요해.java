@@ -46,7 +46,6 @@ public class Main {
                 visited[nx][ny] = 1;
             }
         }
-        if(answer == 0) System.out.println("TT");
-        else System.out.println(answer);
+        System.out.println((answer == 0) ? "TT" : answer);
     }
 }
