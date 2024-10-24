@@ -29,6 +29,7 @@ public class Main {
         max = Math.max(maxx[n][0], Math.max(maxx[n][1], maxx[n][2]));
         min = Math.min(minn[n][0], Math.min(minn[n][1], minn[n][2]));
 
+        StringBuilder sb = new StringBuilder();
         System.out.println(max + " " + min);
     }
 }
