@@ -30,6 +30,6 @@ public class Main {
         min = Math.min(minn[n][0], Math.min(minn[n][1], minn[n][2]));
 
         StringBuilder sb = new StringBuilder();
-        System.out.println(max + " " + min);
+        System.out.println(sb.append(max).append(" ").append(min));
     }
 }
