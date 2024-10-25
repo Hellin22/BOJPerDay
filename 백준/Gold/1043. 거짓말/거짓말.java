@@ -77,11 +77,8 @@ public class Main {
 
         for(int i = 0; i < strstrs.length; i++){
             strs = strstrs[i].split(" ");
-            for(int j = 1; j < strs.length; j++){
-                if(canLying[Integer.parseInt(strs[j])] == false){
-                    cnt--;
-                    break;
-                }
+            if(canLying[Integer.parseInt(strs[1])] == false){
+                cnt--;
             }
         }
 
