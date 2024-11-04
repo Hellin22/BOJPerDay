@@ -1,66 +1,61 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Main {
+public class Main{
     public static void main(String[] args) throws IOException {
-        // 1. 모든곳 -1로 초기화 arr(벽인지 판별), dist(거리배열 -> 이걸 -1로 초기화), isvisitied(방문배열)
-        // 2. 벽인 경우에는 좌표를 따로 저장하는 배열 가지고있기
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] ss = br.readLine().split(" ");
-        int n = Integer.parseInt(ss[0]);
-        int m = Integer.parseInt(ss[1]);
+        String[] strs = br.readLine().split(" ");
+        int n = Integer.parseInt(strs[0]);
+        int m = Integer.parseInt(strs[1]);
 
         int[][] arr = new int[n][m];
-        int[][] dist = new int[n][m];
-        int[][] isvisited = new int[n][m];
-        int[] start = new int[2];
+        int[][] dp = new int[n][m];
+        int[][] visited = new int[n][m];
         int[] dx = {0, 1, 0, -1};
         int[] dy = {1, 0, -1, 0};
 
-        for(int i = 0; i < n; i++){
-            String[] strs = br.readLine().split(" ");
-            for(int j = 0; j < strs.length; j++){
-                dist[i][j] = -1;
+        for(int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        int x = 0, y = 0;
+        for (int i = 0; i < n; i++) {
+            strs = br.readLine().split(" ");
+            for(int j = 0; j < m; j++){
                 arr[i][j] = Integer.parseInt(strs[j]);
-
-                if(arr[i][j] == 2) {
-                    dist[i][j] = 0;
-                    start[0] = i;
-                    start[1] = j;
-                }
-                if(arr[i][j] == 0) {
-                    dist[i][j] = 0;
+                if(arr[i][j] == 2){
+                    x = i; y = j;
+                    dp[i][j] = 0;
+                }else if(arr[i][j] == 0){
+                    dp[i][j] = 0;
                 }
             }
         }
-
         Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{start[0], start[1], dist[start[0]][start[1]]});
-        isvisited[start[0]][start[1]] = 1;
+        q.add(new int[]{x, y});
+        visited[x][y] = 1;
         while(!q.isEmpty()){
-            int[] cur = q.poll();
-
+            int[] curs = q.poll();
             for(int i = 0; i < 4; i++){
-                int nx = cur[0] + dx[i];
-                int ny = cur[1] + dy[i];
+                int nx = curs[0] + dx[i];
+                int ny = curs[1] + dy[i];
 
-                if(nx < 0 || ny < 0 || nx >= n || ny >= m
-                    || arr[nx][ny] == 0 || isvisited[nx][ny] == 1) continue;
+                if(nx < 0 || ny < 0 || nx >= n || ny >= m || visited[nx][ny] == 1 || arr[nx][ny] == 0) continue;
 
-                q.add(new int[]{nx, ny, cur[2] + 1});
-                dist[nx][ny] = cur[2] + 1;
-                isvisited[nx][ny] = 1;
+                dp[nx][ny] = dp[nx][ny] == -1 ? dp[curs[0]][curs[1]] + 1 : Math.min(dp[nx][ny], dp[curs[0]][curs[1]] + 1);
+                visited[nx][ny] = 1;
+                q.add(new int[]{nx, ny});
             }
         }
 
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                sb.append(dist[i][j]).append(" ");
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                sb.append(dp[i][j]).append(" ");
             }
             sb.append("\n");
         }
