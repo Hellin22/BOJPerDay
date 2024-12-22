@@ -1,13 +1,12 @@
 import sys
-
 inp = sys.stdin.readline
 
-t = int(inp().strip())
-strs = []
-for i in range(t):
-    strs.append(inp().strip())
+n = int(inp().strip()) # 단어의 개수
+arr = []
+for i in range(n):
+    arr.append(inp().strip())
 
-sett = set(strs) # 중복 제거
+arr = list(set(arr))
+arr.sort(key=lambda x:(len(x), x))
 
-sorted_words = sorted(sett, key=lambda x: (len(x), x))
-print("\n".join(sorted_words))
+print("\n".join(arr))
