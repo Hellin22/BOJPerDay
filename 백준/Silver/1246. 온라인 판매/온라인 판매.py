@@ -22,11 +22,22 @@ for i in range (m):
     curPrice = list[i]
     curSum = 0
     curn = n
-    for j in range(i, m): # j는 i부터 그 이후까지 진행해야함.
-        curSum += curPrice
-        curn-=1
-        if curn == 0: 
-            break
+    # for j in range(i, m): # j는 i부터 그 이후까지 진행해야함.
+    #     # 여기서 for문을 돌릴 필요가 없구나
+    #     # 어짜피 curPrice만큼 추가할거니까
+    #     # if문 써가지고
+    #     # i ~ m-1까지 진행할텐데
+    #     # m-1-i가 만약 n보다 작거나 같으면 * 해주고
+    #     # 만약 n보다 그다면 n만큼만 곱하면 됨.
+    #     curSum += curPrice
+    #     curn-=1
+    #     if curn == 0: 
+    #         break
+    
+    if m-i <= n:
+        curSum = curPrice * (m-i)
+    else:
+        curSum = curPrice * n
 
     if(curSum > summ):
         price = curPrice
