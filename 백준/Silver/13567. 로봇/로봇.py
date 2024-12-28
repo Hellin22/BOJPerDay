@@ -4,7 +4,6 @@ inp = sys.stdin.readline
 
 m, t = map(int, (inp().strip().split()))
 
-arr = [[0] * (m+1) for _ in range(m+1)] # m+1 * m+1
 dir = 0 # 현재 dir은 남 / 남동서북 순으로 진행
 dx, dy = [1, 0, -1, 0], [0, 1, 0, -1]
 curx, cury = 0, 0
@@ -23,7 +22,7 @@ while t > 0:
             exit()
         
         else:
-            curx, cury = curx + dx[dir]* cnt, cury + dy[dir] * cnt
+            curx, cury = nx, ny
 
     else: # turn인 경우
         if cnt == 0:
