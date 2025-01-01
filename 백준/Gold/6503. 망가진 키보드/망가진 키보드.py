@@ -1,11 +1,12 @@
 import sys
 
 inp = sys.stdin.readline
+res = []
 
 # 입력이 0이 나오면 종료
 while True:
     m = int(inp().strip())
-    if m == 0: exit()
+    if m == 0: break
     line = inp().strip()
     chars = [0] * 128
 
@@ -23,4 +24,7 @@ while True:
             if(chars[charasci] == 0): curCnt-=1
 
         maxx = max(maxx, right - left + 1)
-    print(maxx)
+    res.append(maxx)
+
+for i in res:
+    print(i)
