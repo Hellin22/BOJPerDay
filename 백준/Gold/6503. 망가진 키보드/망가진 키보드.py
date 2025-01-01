@@ -17,13 +17,13 @@ while True:
         chars[charasci]+=1
         if(chars[charasci] == 1): curCnt+=1
 
-        while(curCnt > m):
+        if(curCnt > m):
             charasci = ord(line[left])
             chars[charasci]-=1
             left+=1
             if(chars[charasci] == 0): curCnt-=1
 
-        maxx = max(maxx, right - left + 1)
+        else: maxx = max(maxx, right - left + 1)
     res.append(maxx)
 
 for i in res:
