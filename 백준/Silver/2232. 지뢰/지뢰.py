@@ -28,7 +28,8 @@ while pq:
         for i in range(nextidx+1, n, 1):
             # 폭약이 안터졌다면 터질수 있는지 보고 반복
             if(visit[i] == 1): break # 이미 터져있으므로 종료하기
-            if(llist[i] < next): # 폭약이 터질 수 있음
+            if(llist[i] >= next): break # 폭약이 터질 수 없음.
+            else: # 폭약이 터질 수 있음
                 next = llist[i]  # 다음 폭약 데미지는 next임
                 visit[i] = 1 # 폭약 터졌으니까 1로 바꾸기
     
@@ -37,7 +38,8 @@ while pq:
         previdx = curidx
         for i in range(previdx-1, -1, -1):
             if(visit[i] == 1): break
-            if(llist[i] < prev):
+            if(llist[i] >= prev): break
+            else :
                 prev = llist[i]
                 visit[i] = 1
     res.append(curidx + 1)
