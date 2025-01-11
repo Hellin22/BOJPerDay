@@ -3,41 +3,22 @@ import sys
 inp = sys.stdin.readline
 
 n, w, limitt = map(int, inp().strip().split(" "))
-# 전체 트럭 개수, 다리 트럭 올 수 있는 개수, 다리 최대 하중
-curWeight = 0
-curCnt = 0
-curIdx = 0
-finishIdx = 0
-res = 0
+curWeight, curIdx, res = 0, 0, 0
 q = deque()
 llist = list(map(int, inp().strip().split()))
 
-# 초기 세팅
-# 
-while(len(q) != w):
-    if(curIdx == len(llist)): 
-        print(res + w)
-        exit()
-    # 트럭이 올 수 있음
-    if(curWeight + llist[curIdx] <= limitt):
-        q.append(llist[curIdx])
-        curWeight+=llist[curIdx]
-        curIdx+=1
-    else:
-        q.append(0)
-    res+=1
-
 while(curIdx != len(llist)):
-    # 1. 하나 빼내기
-    appendNumber = q.popleft()
-    curWeight-=appendNumber
+    if len(q) == w:
+        curWeight -= q.popleft()
 
-    # 2. 하나 추가하기
-    if curWeight + llist[curIdx] <= limitt:
+    weight = 0
+    if(curWeight+llist[curIdx]<=limitt):
         q.append(llist[curIdx])
-        curWeight+=llist[curIdx]
+        weight=llist[curIdx]
         curIdx+=1
-    else: q.append(0)
-    res+=1
+    else: 
+        q.append(0)
 
-print(res+len(q))
+    curWeight+=weight
+    res += 1
+print(res + max(w, len(q)))
