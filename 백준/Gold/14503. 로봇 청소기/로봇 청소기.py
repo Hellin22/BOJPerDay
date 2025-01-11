@@ -40,7 +40,7 @@ while True: # 후진 못하면 종료해야함.
     canClean = False
     ndir = dir
     # 2. 청소할 수 있는 칸이 있다면 (반시계로 회전한겨)
-    for i in range(4):
+    for _ in range(4):
         ndir = (ndir + 3) % 4
         nx = x + dx[ndir]
         ny = y + dy[ndir]
@@ -60,6 +60,6 @@ while True: # 후진 못하면 종료해야함.
         ny = y + dy[(dir+2) % 4]
 
         if(nx < 0 or ny < 0 or nx >= n or ny >= m or arr[nx][ny] == 1): break
-        else: x, y = nx, ny # 방문 했다면 이거 처리하면 안됨.
+        else: x, y = nx, ny 
 
 print(res)
