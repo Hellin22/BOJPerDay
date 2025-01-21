@@ -46,6 +46,7 @@ def bfs(x, y, visit):
             q.append([nx, ny])
             visit[nx][ny] = 1
     
+    if len(allXY) == 1: return
     peopleCnt = allPeopleCnt//len(allXY)
     for i in range(len(allXY)):
         arr[allXY[i][0]][allXY[i][1]] = peopleCnt
