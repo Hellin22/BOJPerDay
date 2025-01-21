@@ -10,17 +10,11 @@ arr = [list(map(int, inp().strip().split())) for _ in range(n)]
 cnt = 0
 dx, dy = [0, 1, 0, -1], [1, 0, -1, 0]
 flag = False
-arr2 = [arr[i][:] for i in range(n)]
-# 1. 모든 arr을 돌면서 갱신 -> bfs 돌리기
-# 2. bfs가 여러번 적용될텐데 bfs가 끝날때마다 갱신x -> 다음 bfs에서 영향
-#  -> arr2를 만들고 그곳에 갱신해야함.
-#  -> arr2 = arr, arr2 갱신, arr = arr2
 
 def startt():
-    global arr, cnt, arr2, flag
+    global arr, cnt, flag
     while True:
         visit = [[0] * n for _ in range(n)]
-        arr2 = [arr[i][:] for i in range(n)] # arr -> arr2
         flag = False
         for i in range(n):
             for j in range(n):
@@ -28,18 +22,15 @@ def startt():
                 bfs(i, j, visit)
         if flag == False: 
             return
-
         cnt+=1
-        arr = [arr2[i][:] for i in range(n)] # arr2 -> arr
 
 def bfs(x, y, visit):
-    global arr2, flag
+    global flag
     q = deque()
     q.append([x, y])
     visit[x][y] = 1
     allPeopleCnt = arr[x][y]
-    allXY = []
-    allXY.append([x, y])
+    allXY = [[x, y]]
     while q:
         curs = q.popleft()
 
@@ -48,7 +39,7 @@ def bfs(x, y, visit):
             ny = curs[1] + dy[i]
             if(nx < 0 or ny < 0 or nx >= n or ny >= n or visit[nx][ny] == 1 
             or abs(arr[curs[0]][curs[1]] - arr[nx][ny]) > R or abs(arr[curs[0]][curs[1]] - arr[nx][ny]) < L): continue
-            # bfs 가능 -> arr2를 갱신해야함 -> allXY에 추가
+
             flag = True
             allXY.append([nx, ny])
             allPeopleCnt+=arr[nx][ny]
@@ -57,7 +48,7 @@ def bfs(x, y, visit):
     
     peopleCnt = allPeopleCnt//len(allXY)
     for i in range(len(allXY)):
-        arr2[allXY[i][0]][allXY[i][1]] = peopleCnt
+        arr[allXY[i][0]][allXY[i][1]] = peopleCnt
 
 startt()
 print(cnt)
