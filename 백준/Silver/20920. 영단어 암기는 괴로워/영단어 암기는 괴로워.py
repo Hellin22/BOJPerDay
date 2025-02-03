@@ -15,5 +15,4 @@ for i in range(n):
 
 llist = sorted(dict, key=lambda x: (-dict[x], -len(x), x))
 
-for name in llist:
-    print(name)
+print(' '.join(llist))
