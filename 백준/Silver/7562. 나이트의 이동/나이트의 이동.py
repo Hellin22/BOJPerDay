@@ -4,12 +4,8 @@ inp = sys.stdin.readline
 
 tc = int(inp())
 dx, dy = [-2, -1, 1, 2, 2, 1, -1, -2],[1, 2, 2, 1, -1, -2, -2, -1]
-for case in range(tc):
-    n = int(inp())
+def bfs(curx, cury, targetx, targety, visit):
     res = 0
-    curx, cury = map(int, inp().split())
-    targetx, targety = map(int, inp().split())
-    visit = [[False] * n for _ in range(n)]
     q = deque()
     q.append([curx, cury, 0])
     visit[curx][cury] = True
@@ -24,4 +20,13 @@ for case in range(tc):
             visit[nx][ny] = True
             q.append([nx, ny, curs[2]+1])
 
-    print(res)
+    return res
+
+for case in range(tc):
+    n = int(inp())
+    res = 0
+    curx, cury = map(int, inp().split())
+    targetx, targety = map(int, inp().split())
+    visit = [[False] * n for _ in range(n)]
+
+    print(bfs(curx, cury, targetx, targety, visit))
