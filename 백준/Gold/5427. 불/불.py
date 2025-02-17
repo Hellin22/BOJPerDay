@@ -23,9 +23,9 @@ def bfs(n, m, arr):
             elif arr[i][j] == "*":
                 fire.append([i, j])
 
-    q.append([peoplex, peopley, 0])
     for i in fire:
         q.append([i[0], i[1], 0])
+    q.append([peoplex, peopley, 0])
 
     while q:
         curs = q.popleft()
@@ -42,8 +42,6 @@ def bfs(n, m, arr):
                     arr[nx][ny] = "@"
                     q.append([nx, ny, curs[2]+1])
             elif arr[curs[0]][curs[1]] == "*":
-                if arr[nx][ny] == "@":
-                    arr[nx][ny] = "*"
                 if arr[nx][ny] == ".": 
                     arr[nx][ny] = "*"
                     q.append([nx, ny, curs[2]+1])
