@@ -4,11 +4,8 @@ from collections import deque
 inp = sys.stdin.readline
 t = int(inp().strip())
 dx, dy = [0, 1, 0, -1], [1, 0, -1, 0]
-arr, visit = [], []
 
-
-def bfs(m, n):
-    global arr, visit
+def bfs(m, n, arr, visit):
     q = deque()
     bug = 0
     for i in range(n):
@@ -26,15 +23,14 @@ def bfs(m, n):
     return bug
 
 def initt(m, n, k):
-    global arr, visit
     arr = [[0] * m for _ in range(n)]
     visit = [[False] * m for _ in range(n)]
     for i in range(k):
         y, x = map(int, inp().strip().split())
         arr[x][y] = 1
-
+    return arr, visit
 for _ in range(t):
     m, n, k = map(int, inp().strip().split())
-    initt(m, n, k)
-    print(bfs(m, n))
+    arr, visit = initt(m, n, k)
+    print(bfs(m, n, arr, visit))
 
