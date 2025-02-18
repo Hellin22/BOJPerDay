@@ -20,6 +20,7 @@ def bfs(n, m):
         curs = q.popleft()
         # if min_arr[curs[0]][curs[1]] < curs[3]: continue # 방향이 있기 때문에 단지 숫자가 작다고 이렇게 하면 안됨.
         # min_arr에다가 min_arr[i][j][k] -> k는 0, 1, 2이 존재함. 즉, k는 크기가 3임.
+        if min_arr[curs[2]][curs[0]][curs[1]] < curs[3]: continue
         for i in range(3):
             nx, ny = curs[0] + dx[i], curs[1]+dy[i]
             if nx < 0 or ny < 0 or nx >= n or ny >= m or curs[2] == i or min_arr[i][nx][ny] < curs[3] + arr[nx][ny]: continue
