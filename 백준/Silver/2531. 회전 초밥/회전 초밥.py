@@ -14,9 +14,8 @@ res = len(chobab_dict.keys())
 left, right = 0, k-1
 for _ in range(n):
     right = (right+1) % n
-    if arr[right] not in chobab_dict.keys():
-        chobab_dict[arr[right]] = 1
-    else: chobab_dict[arr[right]]+=1
+    chobab_dict[arr[right]] = chobab_dict.get(arr[right], 0) + 1
+
     if chobab_dict[arr[left]] == 1:
         chobab_dict.pop(arr[left])
     else: chobab_dict[arr[left]]-=1
