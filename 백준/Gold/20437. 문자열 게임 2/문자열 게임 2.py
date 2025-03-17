@@ -3,8 +3,8 @@ inp = sys.stdin.readline
 
 t = int(inp().strip())
 
-for _ in range(t):
-    sttr = inp().strip()
+def sol():
+    sttr = inp().strip()    
     k = int(inp().strip())
 
     alphabet = [[] for _ in range(26)]
@@ -20,3 +20,6 @@ for _ in range(t):
                 res1 = min(res1, alphabet[i][j+k-1]-alphabet[i][j]+1)
                 res2 = max(res2, alphabet[i][j+k-1]-alphabet[i][j]+1)
     print(-1 if res2 == -1 or res1 == 10001 else f"{res1} {res2}")
+
+for _ in range(t):
+    sol()
