@@ -1,3 +1,4 @@
+# 20분 51초
 def solution(diffs, times, limit):
     answer = limit
     
