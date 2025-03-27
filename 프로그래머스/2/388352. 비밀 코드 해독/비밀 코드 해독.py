@@ -1,3 +1,4 @@
+# 30분
 st = set()
 gbn, gbq, gbans = 0, 0, 0
 gbanswer = 0
