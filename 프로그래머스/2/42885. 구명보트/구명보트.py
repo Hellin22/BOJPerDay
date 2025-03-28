@@ -1,8 +1,5 @@
 def solution(people, limit):
-    answer = 0
-    # 돼지 먼저 꺼내기?
-    # 돼지 먼저 -> 멸치 한명 꺼내기(가능하다면)
-    
+    answer = 0    
     people.sort()
     right = len(people)-1
     left = 0
