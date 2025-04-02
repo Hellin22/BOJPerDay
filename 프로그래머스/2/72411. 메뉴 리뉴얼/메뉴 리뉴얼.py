@@ -68,7 +68,7 @@ def solution(orders, courses):
         dfs(0, len(order), i)
     # print(dt)
     # for key, val in dt.items():
-        # print(key if val > 1 else 0) # 아 그거중 가장 많은거를 반환해야하네
+    #     print(key if val > 1 else 0) # 아 그거중 가장 많은거를 반환해야하네
     arr = [[] for _ in range(11)] # 
     
     for key, val in dt.items():
