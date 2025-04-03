@@ -73,6 +73,6 @@ def solution(fees, records):
     
     print(moneys)
     moneys.sort()
-    for i in range(len(moneys)):
-        answer.append(moneys[i][1])
-    return answer
+    return [y for x, y in moneys]
+    
+    return ", ".join(str(y) for x, y in moneys)
