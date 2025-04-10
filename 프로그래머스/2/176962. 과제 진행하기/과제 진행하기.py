@@ -23,12 +23,11 @@ def solution(plans):
         plans[i] = [val[0], ttime, int(val[2])]
     
     plans.sort(key = lambda x: (x[1]))
-    print(plans)
     hq = []
     cur_time = plans[0][1]
     
     for i in range(len(plans)-1):
-    # [['music', 740, 40], ['computer', 750, 100], ['science', 760, 50], ['history', 840, 30]]
+        # [['music', 740, 40], ['computer', 750, 100], ['science', 760, 50], ['history', 840, 30]]
         plan1 = plans[i]
         plan2 = plans[i+1]
         # cur_time을 계속 갱신할 필요가 있음
@@ -45,14 +44,12 @@ def solution(plans):
                 new_pl = heapq.heappop(hq)
                 # 남은시간 + cur_time 했는데 plan2[1]보다 작거나 같다?
                 # 그리고 같다면 즉, ==이면 hq 종료해야함.
-                if new_pl[1] + cur_time < plan2[1]: 
-                    # 만약에 이것도 처리할 수 있다? answer에 추가, cur_time 갱신
+                if new_pl[1] + cur_time <= plan2[1]:
                     answer.append(new_pl[2])
                     cur_time += new_pl[1] 
-                elif new_pl[1] + cur_time == plan2[1]: 
-                    answer.append(new_pl[2])
-                    cur_time += new_pl[1]
-                    break
+                    if cur_time == plan2[1]:
+                        break
+                        
                 else: # 제일 중요한 부분, 중간에 진행하다가 다시 hq에 넣어야함.
                     # 얼마나 진행했는지를 알아야함.
                     # new_pl[1]만큼 해야하는데 cur_time ~ plan2[1] 보다 큰거임.
