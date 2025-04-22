@@ -16,16 +16,10 @@ commands -> prev, next, 건너뛰기
 def ch_to_sec(sttr):
     return int(sttr[:2]) * 60 + int(sttr[3:])
 def ch_to_min(intt):
-    sttr = ""
-    sttr += str(intt//60)
-    if len(sttr) == 1:
-        sttr="0"+sttr
-    sttr+=":"
+    minute, sec = divmod(intt, 60)
+    return f"{minute:02d}:{sec:02d}"
     
-    sttr2 = str(intt%60)
-    if len(sttr2) == 1:
-        sttr2 = "0" + sttr2
-    return sttr+sttr2
+    
 def solution(video_len, pos, op_st, op_end, commands):
     answer = ''
     # 모든걸 초로 만들기
