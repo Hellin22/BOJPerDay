@@ -8,9 +8,10 @@ def solution(ingredient):
     stck = []
     
     for v in ingredient:
-        if len(stck) >= 3 and stck[-1] == 3 and stck[-2] == 2 and stck[-3] == 1 and v == 1:
-            answer += 1
-            for i in range(3):
-                stck.pop()
+        if stck[-3:] == [1, 2, 3] and v == 1:
+            answer +=1
+            stck.pop()
+            stck.pop()
+            stck.pop()
         else: stck.append(v)
     return answer
