@@ -28,9 +28,7 @@ def solution(X, Y):
         for i in range(9, -1, -1):
             if i != 0 and llist2[i] != 0:
                 z_flag = True
-            for j in range(llist2[i]):
-                ls.append(i)
-                answer+=str(i)
+            ls.extend(str(i) * llist2[i])
     
     if z_flag == False: return "0"
     
