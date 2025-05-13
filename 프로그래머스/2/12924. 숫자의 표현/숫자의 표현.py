@@ -19,6 +19,7 @@ def solution(n):
             if right > n: break
             summ+=right
         else: 
+            # 그 외의 경우
             summ-=left
             left+=1
             
