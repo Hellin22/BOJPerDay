@@ -1,0 +1,5 @@
+-- 코드를 입력하세요
+# ANIMAL_INS tb -> 아픈 동물의 ID, 이름
+SELECT ANIMAL_ID, NAME
+FROM ANIMAL_INS
+WHERE INTAKE_CONDITION = "Sick";
