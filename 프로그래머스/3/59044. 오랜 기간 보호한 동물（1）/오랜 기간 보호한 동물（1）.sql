@@ -1,0 +1,13 @@
+# 아직 입양을 못간 동물 중, 가장 오래 보호소에 있었던 동물 3마리 이름, 보호시작일
+
+# 1. ANIMAL_INS에 있는데 ANIMAL_OUTS에 없는 동물 중
+# 2. ORDER BY DATETIME DESC # 가장 오래된놈
+# 3. TOP 3명의 이름, 보호시작일
+
+SELECT A.NAME, A.DATETIME
+FROM ANIMAL_INS A
+    LEFT OUTER JOIN ANIMAL_OUTS B
+    ON A.ANIMAL_ID = B.ANIMAL_ID
+WHERE B.ANIMAL_ID IS NULL
+ORDER BY A.DATETIME ASC
+LIMIT 3
