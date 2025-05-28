@@ -1,0 +1,5 @@
+# 이름 null이면 x, 중복이름은 1개로 (distinct)
+
+SELECT COUNT(DISTINCT(NAME))
+FROM ANIMAL_INS
+WHERE NAME IS NOT NULL
