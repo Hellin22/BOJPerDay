@@ -9,7 +9,6 @@ n개를 gcd하면?
 
 
 '''
-
 def solution(arr):
     
     result = arr[0]
