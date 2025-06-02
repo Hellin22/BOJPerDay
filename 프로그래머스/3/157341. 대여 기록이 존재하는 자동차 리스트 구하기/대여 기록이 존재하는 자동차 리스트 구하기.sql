@@ -1,0 +1,11 @@
+# 1. 1번 테이블에서 CAR_TYPE이 '세단'
+# 2. 2번 테이블에서 START_DATE가 10월에 대여 시작한 기록 있는거
+# 3. 자동차 ID는 중복 없어야함.
+# 4. 자동차 ID 기준 내림차순
+SELECT DISTINCT A.CAR_ID
+FROM CAR_RENTAL_COMPANY_CAR A
+    JOIN CAR_RENTAL_COMPANY_RENTAL_HISTORY B
+    ON A.CAR_ID = B.CAR_ID
+WHERE A.CAR_TYPE = '세단'
+  AND LEFT(B.START_DATE, 7) >= '2022-10'
+ORDER BY A.CAR_ID DESC
