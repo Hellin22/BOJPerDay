@@ -14,9 +14,6 @@ if a > b: a는 b를 이김
 음...
 플로이드 와샬?
 그래프를 2개 유지? g1은 정방향, g2는 역방향
-
-왜 이걸로 안되는거지?
-
 '''
 def solution(n, results):
     answer = 0
@@ -27,35 +24,21 @@ def solution(n, results):
     for a, b in results:
         g1[a].append(b)
         g2[b].append(a)
-    v1 = [0] * (n+1)
-    v2 = [0] * (n+1)
-    cnt = 0
-    def dfs(node):
+        
+    def dfs(graph, node, visit):
         nonlocal cnt
-        for num in g1[node]:
-            if v1[num] == 1: continue
-            v1[num] = 1
+        for num in graph[node]:
+            if visit[num] == 1: continue
+            visit[num] = 1
             cnt+=1
-            dfs(num)
-            # v1[num] = 0 # 필요 없을듯
-    def dfs2(node):
-        nonlocal cnt
-        for num in g2[node]:
-            if v2[num] == 1: continue
-            v2[num] = 1
-            cnt+=1
-            dfs2(num)
-            # v2[num] = 0
+            dfs(graph, num, visit)
     
     for i in range(1, n+1):
-        dfs(i)
-        dfs2(i)
-        if cnt == n-1: answer+=1 
         cnt = 0
-        
         v1 = [0] * (n+1)
         v2 = [0] * (n+1)
-    
-    
-    
+        dfs(g1, i, v1)
+        dfs(g2, i, v2)
+        if cnt == n-1: answer+=1 
+        
     return answer
