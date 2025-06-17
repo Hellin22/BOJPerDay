@@ -56,13 +56,10 @@ def solution(stones, k):
         
         dq.append((stones[idx], idx)) # 값, idx
         
-    
-    for i in range(k): # k가 3이면?
+    for i in range(len(stones)):
         insert(i)
-    minn = min(minn, dq[0][0])
-    for i in range(k, len(stones)):
-        insert(i)
-        minn = min(minn, dq[0][0])
+        if i >= k-1:
+            minn = min(minn, dq[0][0])
         
     # zzzz 우리는 최대값을 찾아야함.... 최대값중 최소를 찾아야한다..
         
