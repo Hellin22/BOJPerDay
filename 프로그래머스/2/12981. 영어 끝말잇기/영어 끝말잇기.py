@@ -26,7 +26,7 @@ def solution(n, words):
             break
         word_st.add(cur)
         
-        # 2. 길이가 1이면 안됨.
+        # 2. 길이가 1이면 안됨
         if len(cur) == 1:
             print(i, i%n+1, i//n+1)
             answer = [i%n+1, i//n+1]
