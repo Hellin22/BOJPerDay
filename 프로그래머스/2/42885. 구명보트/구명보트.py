@@ -10,7 +10,7 @@ def solution(people, limit):
         cur += people[right]
         right-=1
         answer+=1
-        if limit >= cur+people[left]: # 2명이 최대임?
+        if limit >= cur+people[left]: # 2명이 최대
              left+=1
     
     
