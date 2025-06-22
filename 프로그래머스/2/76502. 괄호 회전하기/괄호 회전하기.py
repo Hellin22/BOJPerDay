@@ -27,7 +27,7 @@ def solution(s):
                     flag = False
                     break
         if flag and not stck: 
-            answer+=1
+            answer+=1 #
         cur+=1
             
             
