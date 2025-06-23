@@ -26,7 +26,5 @@ def solution(sequence):
     for i in range(1, n):
         dp[i][0] = max(dp[i-1][1], 0) - sequence[i]
         dp[i][1] = max(dp[i-1][0], 0) + sequence[i]
-    for i in range(n):
-        for j in range(2):
-            answer = max(answer, dp[i][j])
-    return answer
+    
+    return max(map(max, dp))
