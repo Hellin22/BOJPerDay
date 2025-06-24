@@ -6,7 +6,7 @@
 def solution(want, number, discount):
     left, right = 0, 9
     res = 0
-    dt = dict()
+    dt = dict()#
     for i, pwant in enumerate(want):
         dt[pwant] = number[i]
     
