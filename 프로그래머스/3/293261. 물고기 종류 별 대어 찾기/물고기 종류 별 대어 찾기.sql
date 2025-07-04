@@ -1,0 +1,25 @@
+/*
+FISH_INFO 는 잡은 물고기 정보
+
+잡은 물고기 길이가 10cm 이하는 LENGTH가 NULL
+
+FISH_NAME_INFO 는 물고기 종류, 이름
+
+물고기 종류별로 가장 큰 물고기의 ID, 물로기 이름, 길이
+물고기 ID ASC
+
+*/
+
+# 1. FISH_TYPE별로 LENGTH가 가장 큰 거 구하기 -> NULL처리 HOW
+
+SELECT B.ID, A.FISH_NAME, B.LENGTH
+FROM FISH_NAME_INFO AS A
+    JOIN FISH_INFO AS B
+    ON A.FISH_TYPE = B.FISH_TYPE
+
+WHERE (A.FISH_TYPE, B.LENGTH) IN(
+    SELECT FISH_TYPE, MAX(LENGTH) AS LENGTH
+    FROM FISH_INFO
+    GROUP BY FISH_TYPE
+) 
+ORDER BY B.ID ASC
