@@ -8,7 +8,7 @@ class Solution {
             if (s.charAt(i) == '('){
                 stck.add('(');
             }
-            else{ // ')'
+            else{ // )
                 if(stck.empty()) return false;
                 else{
                     stck.pop();
