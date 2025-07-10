@@ -1,0 +1,23 @@
+/*
+FOOD_PRODUCT
+
+CATEGORY가  '과자', '국', '김치', '식용유'
+식품 분류(CATEGORY)별로 가격이 제일 비싼 것
+
+*/
+
+# 1. CATEGORY가 4개만 추출
+
+SELECT B.CATEGORY, B.PRICE AS MAX_PRICE, A.PRODUCT_NAME
+FROM FOOD_PRODUCT AS A
+JOIN (
+    SELECT CATEGORY, MAX(PRICE) AS PRICE
+    FROM FOOD_PRODUCT
+    WHERE CATEGORY IN ('과자', '국', '김치', '식용유')
+    GROUP BY CATEGORY) 
+    AS B
+ON A.PRICE = B.PRICE AND A.CATEGORY = B.CATEGORY
+ORDER BY MAX_PRICE DESC
+
+# 2. GROUP BY CATEGORY로 하고 MAX(PRICE)만 추출하면 되는데 PRODUCT_NAME이 집계함수에서 없어서 잘못된 결과
+# -> 서브쿼리가 필요?
