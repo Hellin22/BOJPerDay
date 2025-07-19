@@ -1,7 +1,6 @@
 '''
 투포인터
 left, right = 0
-4
 '''
 
 def solution(n):
