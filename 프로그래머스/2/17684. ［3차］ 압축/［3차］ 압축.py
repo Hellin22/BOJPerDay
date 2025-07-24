@@ -18,14 +18,10 @@ def solution(msg):
         
         else:
             for i in range(1, len(msg)+1):
-                # print(msg[:i], "hello", i)            
                 if msg[:i] not in dt:
                     dt[msg[:i]] = len(dt)+1
-                    # print(msg[:i-1], msg[:i])
-                    # print(msg)
                     answer.append(dt[msg[:i-1]])
                     msg = msg[i-1:]
-                    # print("후",msg)
                     break
             
                     
