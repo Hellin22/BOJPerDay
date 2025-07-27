@@ -9,5 +9,5 @@ def solution(k, tangerine):
     a.sort(reverse = True)
     for i, val in enumerate(a):
         answer+=val
-        if answer >= k:
+        if answer >= k:#
             return i+1
