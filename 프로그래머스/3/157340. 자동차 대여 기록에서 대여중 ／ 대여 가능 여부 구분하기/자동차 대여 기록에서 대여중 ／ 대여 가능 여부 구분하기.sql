@@ -1,12 +1,42 @@
-SELECT DISTINCT CAR_ID,
-       CASE
-           WHEN CAR_ID IN (
-               SELECT CAR_ID
-               FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
-               WHERE '2022-10-16' BETWEEN START_DATE AND END_DATE
-           )
-           THEN '대여중'
-           ELSE '대여 가능'
-       END AS AVAILABILITY
+/*
+CAR_RENTAL_COMPANY_RENTAL_HISTORY 
+2022/10/16에 대여 가능한지 안한지
+END가 2022/10/16 이전 OR START가 2022/10/16 이후
+
+*/
+
+# SELECT
+#     SQ.CAR_ID, 
+#     CASE
+#         WHEN COUNT(SQ.CAR_ID) > 2 THEN '대여중'
+#         ELSE '대여가능'
+#     END AS AVAILABILITY,
+#     COUNT(SQ.CAR_ID) AS ACCASDC
+# FROM(
+#     SELECT 
+#         CAR_ID,
+#         CASE 
+#             WHEN START_DATE > '2022-10-16' OR END_DATE < '2022-10-16' THEN '대여가능'
+#             ELSE '대여중'
+#         END AS AVAILABILITY
+#     FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+# )AS SQ
+# GROUP BY SQ.CAR_ID, SQ.AVAILABILITY
+# ORDER BY SQ.CAR_ID DESC
+
+
+
+# 대여 중
+
+SELECT 
+    DISTINCT CAR_ID,
+    CASE
+        WHEN CAR_ID IN (
+            SELECT CAR_ID
+            FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+            WHERE START_DATE <= '2022-10-16' AND END_DATE >= '2022-10-16'
+        ) THEN '대여중'
+        ELSE '대여 가능'
+    END AS AVAILABILITY
 FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
-ORDER BY CAR_ID DESC;
+ORDER BY CAR_ID DESC
