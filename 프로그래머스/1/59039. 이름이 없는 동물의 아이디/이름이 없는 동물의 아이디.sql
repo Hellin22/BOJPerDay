@@ -1,4 +1,4 @@
-# 이름 없는 동물 ID
+# 이름 없는 동물
 SELECT ANIMAL_ID
 FROM ANIMAL_INS
 WHERE NAME IS NULL
