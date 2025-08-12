@@ -16,14 +16,8 @@ def solution(s):
     flg = True
     
     for i in s:
-        if i == ' ': # 공백이면 flg는 True
-            flg = True
-            answer += " "
-        else:
-            if flg: # flg라면 첫 단어라는 의미라서 upper
-                answer += i.upper()
-            else: answer += i.lower()
-            flg = False
+        answer += i.upper() if flg else i.lower()
+        flg = (i == ' ')
         
     return answer
     
