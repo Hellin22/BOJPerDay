@@ -1,13 +1,19 @@
+'''
+x의 모든 0 제거
+x 길이가 c이면 x는 c가 되고 c를 2진법으로 바꾼걸로 바뀜.
+이거 bin?
+1이 될때까지 진행
+replace 0 ''
+'''
 def solution(s):
-    z_cnt = 0
-    cnt = 0
-    # 1. 모든 0 제거하기
-    # 2. x의 길이 c를 다시 2진법으로 바꾸기
-    # 3. 0의 개수 + 몇번 반복했는지 저장 
-    
-    while s != "1":
-        z_cnt += s.count("0")
-        s = s.replace("0", "")
+    ans, cnt = 0, 0
+    while s != '1':
+        cnt+=1
+        
+        # 1. s의 모든 0 제거
+        ans += len(s) - len(s.replace('0', ''))
+        s = s.replace('0', '')
+        
+        # 2. s의 길이를 다시 s에 대입
         s = bin(len(s))[2:]
-        cnt+=1        
-    return [cnt, z_cnt]
+    return [cnt, ans]
