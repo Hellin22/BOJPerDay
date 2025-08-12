@@ -1,16 +1,22 @@
+'''
+n의 다음 큰숫자 구하기
+
+n보다 커야함
+n을 2진수로 변환했을 때 1 개수 같음
+위를 만족하는 가장 작은 수
+
+n은 백만
+완탐을 한다면?
+2진수 찾는거는 log시간, 1 count 시간
+
+그렇게 안큼
+'''
+
 def solution(n):
-    answer = 0
-    nxt_n = n
+    cnt = bin(n)[2:].count('1')
     
-    # n보다 큰 자연수
-    # n과 1의 개수가 동일함. -> 길이가 다를수도 
-    # 길이가 다른 경우만 예외처리 == 길이와 1의 개수가 동일하다? -> 길이 하나 더 길고 처음이 1이고 2번째 비우고 나머지 1
-    n = list(bin(n)[2:])
-    one_cnt = n.count("1")
     while True:
-        nxt_n += 1
-        nxt_n_list = list(bin(nxt_n)[2:])
-        if nxt_n_list.count("1") == one_cnt:
-            return nxt_n
-        
-    return
+        n+=1
+        if cnt == bin(n)[2:].count('1'):
+            return n
+    
