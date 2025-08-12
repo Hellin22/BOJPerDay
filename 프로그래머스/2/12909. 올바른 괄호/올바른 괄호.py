@@ -4,14 +4,31 @@
 '''
 
 def solution(s):
-    num = 0
+# 1번
+    stck = []
     for i in s:
-        if i == "(":
-            num+=1
-        else:
-            if num == 0: return False
-            else: num-=1
+        if i == '(':
+            stck.append(1)
+        elif i == ')' and stck:
+            stck.pop()
+        else: return False
     
-    if num != 0: return False
+    if stck: return False
     else: return True
+    
+    
+    
+    
+
+# 2번
+#     num = 0
+#     for i in s:
+#         if i == "(":
+#             num+=1
+#         else:
+#             if num == 0: return False
+#             else: num-=1
+    
+#     if num != 0: return False
+#     else: return True
     
