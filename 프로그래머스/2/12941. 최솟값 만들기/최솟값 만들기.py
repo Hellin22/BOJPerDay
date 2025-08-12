@@ -4,8 +4,5 @@ a*b의 합이 최소가 되도록하기
 '''
 def solution(A,B):
     A.sort()
-    B.sort(key = lambda x: -x)
-    ans = 0
-    for i in range(len(A)):
-        ans += A[i]*B[i]
-    return ans
+    B.sort(reverse = True)
+    return sum(a*b for a, b in zip(A, B))
