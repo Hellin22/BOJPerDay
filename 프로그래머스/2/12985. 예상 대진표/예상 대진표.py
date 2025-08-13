@@ -1,9 +1,16 @@
-def solution(n,a,b):
-    answer = 0
-    while True:
-        a = a//2 if a % 2 == 0 else a//2+1
-        b = b//2 if b % 2 == 0 else b//2+1
-        if a == b:
-            return answer+1 #
-        answer+=1
 
+
+def solution(n,a,b):
+    cnt = 0
+    while True:
+        cnt+=1
+        if abs(a - b) == 1 and a //2 != b //2:
+            return cnt
+        a, b = a//2+a%2, b//2+b%2
+    
+    '''
+    a, b는 언제 만나나?
+    1. 1 2 / 3 4 / 5 6 -> 1 / 2 / 3   //2 + %2
+    -> a - b = abs(1)이고 a//2 b//2는 달라야함.
+    
+    '''
