@@ -1,35 +1,38 @@
 def solution(s):
-    answer = 0
-    stck = []
-    cur = 0
-    for _ in range(len(s)):
-        stck.clear()
-        flag = True
-        for i in range(len(s)):
-            if s[(cur+i) % len(s)] in "[({":
-                stck.append(s[(cur+i) % len(s)])
-            elif s[(cur+i) % len(s)] == "]":
-                if stck and stck[-1] == "[":
-                    stck.pop()
-                else: 
-                    flag = False
-                    break
-            elif s[(cur+i) % len(s)] == ")":
-                if stck and stck[-1] == "(":
-                    stck.pop()
-                else: 
-                    flag = False
-                    break
-            elif s[(cur+i) % len(s)] == "}":
-                if stck and stck[-1] == "{":
-                    stck.pop()
-                else: 
-                    flag = False
-                    break
-        if flag and not stck: 
-            answer+=1 
-        cur+=1
+    n = len(s)
+    ans = 0
+    
+    for i in range(n):
+        # 시작점
+        srt = i-1
+        flg = True
+        stck = []
+        for j in range(n):
+            srt = (srt+1) % n
             
+            if( stck and
+                ((stck[-1] == '(' and s[srt] == ')') or
+                (stck[-1] == '[' and s[srt] == ']') or
+                (stck[-1] == '{' and s[srt] == '}'))):
+                stck.pop()
+            elif s[srt] == '(' or s[srt] == '[' or s[srt] == '{':
+                stck.append(s[srt])
+            else: 
+                flg = False
+                break
             
-            
-    return answer
+        if not stck and flg == True: ans+=1
+    return ans
+
+
+    '''
+    왼쪽으로 x칸 만큼 회전 -> s가 올바른가?
+    x칸은 0~s-1 만큼 회전한것
+    스택 말고 a1, a2, b1, b2, c1, c2로 하기
+    
+    -> 중첩구조를 파악못해서 이걸로 못품
+    ([)] -> 이것도 맞는거처리되기 때문
+    
+    
+    
+    '''
