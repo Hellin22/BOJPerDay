@@ -1,40 +1,36 @@
-'''
-윈도우 슬라이싱
-10일간 -> left는 0, right도 처음에 0 -> right 하나씩 늘려가면서 9까지
-정확히 일치하면 끝낸다고함.
-'''
+from collections import defaultdict
 def solution(want, number, discount):
-    left, right = 0, 9
-    res = 0
-    dt = dict()
-    for i, pwant in enumerate(want):
-        dt[pwant] = number[i]
     
+    dt = defaultdict()
+    for i, j in zip(want, number):
+        dt[i] = j
+    
+    l, r = 0, 9
     for i in range(10):
-        if discount[i] in dt:
-            dt[discount[i]]-=1
-    flag = True
-    for val in dt.values():
-        if val != 0:
-            flag = False
-            break
-    if flag:
-        res+=1
-    
-    while right != len(discount)-1:
-        if discount[left] in dt:
-            dt[discount[left]]+=1
-        left+=1
-        right+=1
-        if discount[right] in dt:   
-            dt[discount[right]]-=1  
+        word = discount[i]
+        if word in dt: dt[word]-=1        
+    res = 0
+    while r != len(discount):
         
-        flag = True
-        for val in dt.values():
-            if val != 0:
-                flag = False
+        # 1. dt가 모두 0인지?
+        flg = True
+        for v in dt.values():
+            if v != 0:
+                flg = False
                 break
-        if flag:
-            res+=1
-            
+        if flg: res+=1
+        if r == len(discount)-1: break
+        
+        if discount[l] in dt: dt[discount[l]] += 1
+        l, r = l+1, r+1
+        if discount[r] in dt: dt[discount[r]]-=1
+    
     return res
+    '''
+    10일 연속 일치할 경우 회원가입
+    윈도우
+    discount 0~9까지 want에 추가
+    number에 매치되면 ans+1
+    
+    
+    '''
