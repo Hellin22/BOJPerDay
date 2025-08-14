@@ -1,17 +1,8 @@
-from collections import defaultdict
+from collections import Counter
 
 def solution(clothes):
-    dt = defaultdict(int)
-    for a, b in clothes:
-        dt[b] +=1
-    
+    ct = Counter(k for v, k in clothes)
     ans = 1
-    for v in dt.values():
+    for v in ct.values():
         ans *= (v+1)
-    
     return ans-1
-    
-    
-    '''
-    개수+1 곱하고 -1
-    '''
