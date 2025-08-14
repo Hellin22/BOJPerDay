@@ -1,14 +1,17 @@
-'''
-[["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]]
+from collections import defaultdict
 
-'''
 def solution(clothes):
-    dt = dict()
-    for val, key in clothes:
-        dt[key] = dt.get(key, 0)+1
+    dt = defaultdict(int)
+    for a, b in clothes:
+        dt[b] +=1
     
     ans = 1
-    for k, v in dt.items():
+    for v in dt.values():
         ans *= (v+1)
     
     return ans-1
+    
+    
+    '''
+    개수+1 곱하고 -1
+    '''
