@@ -1,23 +1,32 @@
-from collections import deque
+from itertools import permutations, product
 
 def solution(numbers, target):
-    answer = 0
+    '''
+    최대 20개라 ㄱㅊ
+    +인지, -인지만 선택하면 됨.
     
-    dq = deque()
-    dq.append(numbers[0])
-    dq.append(-numbers[0])
-
-    for i in range(1, len(numbers)):
-        llist = list(dq) # 1하고 -1이 들어있는것 -> 이거에 대해서 numbers[i]를 더하고 빼주는 로직이 필요함.
-        for j in range(len(llist)):
-            dq.popleft()
-            dq.append(llist[j] + numbers[i])          
-            dq.append(llist[j] - numbers[i])          
+    0인지, 1인지를 선택하게하기
+    +++++
+    ++++-
+    +++-+
+    +++--
+    ++-++
+    ++--+
+    '''
+    a = 0
+    ans = 0
+    def dfs(i):
+        nonlocal a, ans, target
+        # print(i, a, ans)
+        if i == len(numbers):
+            if a == target: ans+=1
+            return
+        a+=numbers[i]*1
+        dfs(i+1)
+        a+=numbers[i]*-2
+        dfs(i+1)
+        a+=numbers[i]*1
     
-    llist = list(dq)
-    for i in llist:
-        if i == target:
-            answer+=1
-    
-            
-    return answer
+    dfs(0)
+    # print(a, ans)
+    return ans
