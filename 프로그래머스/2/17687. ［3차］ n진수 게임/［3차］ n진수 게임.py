@@ -1,48 +1,38 @@
-'''
-n은 몇진법인지
-t는 미리 구할 숫자 갯수(1~1000) -> 내가 말해야하는 숫자
-m은 참가하는 사람수 (2~100)
-p는 내 순서 (p는 1~m 이겠죠)
-
-완탐으로 진행?
-n 진법만큼 idx에 수가 올 수 있음
-
-완탐 진행해보기
-
-'''
-
 from collections import deque
 def solution(n, t, m, p):
-    answer = []
     
-    def nzinbub(n, num):
-        res = deque()
-        while num//n != 0: # 몫이 0이 아니라면 계속해서 나눠지는것
-            res.appendleft(num%n)
-            num = num//n
-        res.appendleft(num%n)
-        return list(res)
     
-    cur = 0 # cur이 t개가 된다면 종료
-    num = 0
-    cur_p = 0 # 현재 순서
-    # p가 순서임. -> 현재 순서 cur_p %= m으로 진행
-    while cur != t:
-        llist = nzinbub(n, num)
-        for i in range(len(llist)):
-            if cur_p == p-1: 
-                answer.append(llist[i])
-                cur+=1
-                if cur == t: break
-            cur_p = (cur_p+1) % (m)
+    '''
+    n진법, t개의 미리 구할 숫자 수, m명 인원, 튜브 순서p
+    
+    0 1 10 11 100 101 111 1000
+    0 1 1 1
+    n 진법으로 바꾸는 방법이 필요 -> t는 1000개 -> 완탐으로도 충분히 가능한 수치
+    
+    '''
+    ans = []
+    # 어떤 수 num을 n진법으로 바꾸는 함수
+    dq = deque()
+    namerji = {'0':'0', '1':'1', '2':'2', '3':'3', '4':'4', '5':'5', '6':'6', '7':'7', '8':'8', '9':'9', '10':'A', '11':'B', '12':'C', '13':'D', '14':"E", '15':"F"}
+    
+    def change(n, num):
+        while num >= n: # 8 // 3 = 2
+            dq.appendleft(namerji[str(num%n)])            
+            num//=n
+        dq.appendleft(namerji[str(num)])
         
+    p = p-1 # 내 차례
+    cur = 0 # 현재 순서
+    num = 0
+    while len(ans) < t:
+        dq = deque()
+        change(n, num) # dq에 값이 들어감
         num+=1
-    for i in range(len(answer)):
-        if answer[i] == 10: answer[i] = "A"
-        if answer[i] == 11: answer[i] = "B"
-        if answer[i] == 12: answer[i] = "C"
-        if answer[i] == 13: answer[i] = "D"
-        if answer[i] == 14: answer[i] = "E"
-        if answer[i] == 15: answer[i] = "F"
-    
-    return "".join(map(str, answer))
+        
+        # dq에서 처리하고 cur+=1 -> dq 빌때까지
+        while dq and len(ans) < t: # popleft
+            pl = dq.popleft()
+            if cur == p:
+                ans.append(pl)
+            cur = (cur+1) % m
+    return ''.join(map(str, ans))
