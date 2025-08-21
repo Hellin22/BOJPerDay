@@ -15,20 +15,15 @@ def solution(str1, str2):
     중복이 적용됨. -> dt로 바꿔서 해보기.
     '''
     
+    str1, str2 = str1.upper(), str2.upper()
     dt1, dt2 = defaultdict(int), defaultdict(int)
     
-    str1, str2 = list(str1), list(str2)
-    for i in range(len(str1)):
-        str1[i] = str1[i].upper()
-    for i in range(len(str2)):
-        str2[i] = str2[i].upper()
-    
     for i in range(len(str1)-1):
-        ss = str1[i] + str1[i+1]
+        ss = str1[i:i+2]
         if ss.isalpha():
             dt1[ss]+=1
     for i in range(len(str2)-1):
-        ss = str2[i] + str2[i+1]
+        ss = str2[i:i+2]
         if ss.isalpha():
             dt2[ss]+=1
     
