@@ -2,7 +2,7 @@ def solution(elements):
 
     st = set()
     n = len(elements)
-    for i in range(0, n): # 몇개의 원소를 가진 부분수열인지 
+    for i in range(0, n): # 몇개의 원소를 가진 부분수열인지
         l, r = 0, i
         wd = sum(elements[l:r+1])
         st.add(wd)
