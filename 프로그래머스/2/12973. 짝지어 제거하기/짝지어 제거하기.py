@@ -2,7 +2,7 @@ def solution(s):
     stck = []
     for i in s:
         if not stck: stck.append(i)
-        else: 
+        else: #
             if stck[-1] == i:
                 stck.pop()
             else: stck.append(i)
