@@ -1,35 +1,30 @@
-'''
-bfs 진행 -> x+n, 2x, 3x -> 항상 기존값보다 커짐 -> 만약 y보다 커지면 해당숫자는 추가x
-
-'''
-
 from collections import deque
-
 def solution(x, y, n):
-    answer = 0
     
-    llist = [0] * 1000001
+    '''
+    x -> y로 만드는 최소 연산 횟수
+    2x, 3x, x+n
+    불가능하면 -1
+    '''
     if x == y: return 0
+
     dq = deque()
-    dq.append((x, 0))
-    while True:
-        if not dq: return -1
-        
-        pl, cnt = dq.popleft()
-        fir, sec, thr = pl+n, pl*2, pl*3
-        if fir == y: return cnt+1
-        if sec == y: return cnt+1
-        if thr == y: return cnt+1
-        
-        if fir < y and llist[fir] == 0: 
-            dq.append((fir, cnt+1))
-            llist[fir] = 1
-        if sec < y and llist[sec] == 0: 
-            dq.append((sec, cnt+1))
-            llist[sec] = 1
-        if thr < y and llist[thr] == 0:
-            dq.append((thr, cnt+1))
-            llist[thr] = 1
-        
-        
+    visit = [0] * 1000001
+    for i in [3*x, 2*x, x+n]:
+        if i == y: return 1
+        elif i <= 100000 and i < y:
+            dq.append((i, 1))
+            visit[i] = 1
+            
+    while dq:
+        a, cnt = dq.popleft()
+        if a > y: continue
+        elif a == y: 
+            return cnt
+        else:
+            for i in [3*a, 2*a, a+n]:
+                if i <= 1000000 and i <= y and visit[i] == 0: 
+                    dq.append((i, cnt+1))
+                    visit[i] = 1
+                    
     return -1
