@@ -1,26 +1,38 @@
-# 40분 -> 0일때 increase를 2번해서 계속 틀림
+from collections import deque
+import math
 def solution(players, m, k):
     '''
-    players는 동시간대 사람수 배열 [1, 2, ..., 1, 1] # 길이는 24이고 각각 0~1000명일 수 있음
-    m은 서버 하나당 최대 이용자 수 -> m명이 됨 == 서버하나 추가하기 -> 네모 // m 만큼 서버가 필요
-    k는 서버 운영 시간 의미  1~24
-    '''    
-    server_increase = 0
-    server_cnt = [0] * 24 # 0~23 까지
+    m명 늘어날때마다 서버+1
+    어느 시간대 이용자가 n*m명 이상 (n+1)*m 미만 -> n대는 가동중이어야함
     
-    server_cnt[0] = players[0] // m
-    if server_cnt[0] != 0:
-        server_increase += server_cnt[0]
-        for i in range(k):
-            server_cnt[i] = server_cnt[0]
-            
-    for i in range(1, 24):
-        if players[i] // m > server_cnt[i]:
-            # 서버를 늘려야함. 얼마나? players[i]//m과 server_cnt[i]가 같을때 까지
-            a = players[i] // m - server_cnt[i]  # a가 음수가 되면 안되지요 -> 애초에 커야지 여기 들어옴
-            server_increase+=a
-            for j in range(i, min(i+k, 24)):
-                server_cnt[j] +=a
+    m이 3이면?
+    증설된거니까 9, 10, 11명은 3대 서버 증설로 감당 가능함.
+    즉, 증설 서버 +1 * m이 최대 수용수 의미
+    
+    한번 증설한 서버는 k 시간 동안만 가능
+    k가 5이면 10~15까지만 운영
+    
+    '''
+    
+    dq = deque() # 서버가 언제까지 켜놓아지는지를 저장하는 덱
+    # [종료시간, 서버대수]
+    cnt = 0 # 현재 서버 대수
+    ans = 0 # 답
+    for i, p in enumerate(players):
         
         
-    return server_increase
+        if dq and dq[0][0] == i: # 증설된 서버 삭제
+            cnt-=dq.popleft()[1]
+        
+        need = p//m # 필요한 서버 수 의미
+        
+        # 필요한 서버수보다 cnt가 많다? 그러면 증설 안해도됨.
+        # 필요한 서버수가 cnt보다 많다? 그러면 필요한 서버수-cnt만큼 dq에 추가해야함.
+        # cnt도 증가시키고
+        if need <= cnt: continue
+        else: 
+            dq.append((i+k, need-cnt))
+            ans += need-cnt
+            cnt = need
+
+    return ans
