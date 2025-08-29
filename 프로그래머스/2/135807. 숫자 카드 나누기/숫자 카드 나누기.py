@@ -1,41 +1,63 @@
-'''
-a의 모든 숫자를 나눌 수 있고 + b의 모든 숫자를 못나누는 최대 양의 정수
-반대도 가능
-배열 크기는 최대 50만개
-
-A를 모두 나눌 수 있다 -> A의 최소공배수 -> 나눌 수 있는거니까 공약수로 가야할듯??
-B를 하나도 나눌 수 없다. -> 최대 공약수가 아닌것?
-
-결론
-A, B의 최대공약수를 구함.
-Agcd를 Barray에 대해서 나눠지는지 확인 -> 나눠지면 2번으로 / 끝까지 안나눠지면 answer = Agcd
-Bgcd를 Aarray에 대해서 진행 -> 나눠지면 종료 / 끝까지 x -> answer = max(answer, Bgcd)
-'''
-import math
-def solution(arrayA, arrayB):
-    answer = 0
+def solution(arra, arrb):
+    '''
+    가장 큰 양의 정수?
     
-    gcdA, gcdB = arrayA[0], arrayB[0]
-    for v in arrayA:
-        gcdA = math.gcd(gcdA, v)
-    for v in arrayB:
-        gcdB = math.gcd(gcdB, v)
+    a를 모두 나누면서 b는 못나누는거
     
-    flgA, flgB = True, True
-    for v in arrayB:
-        if v < gcdA: continue
-        if v % gcdA == 0: 
-            print(v, gcdA, v%gcdA)
-            flgA = False
-            break
-    for v in arrayA:
-        if v < gcdB: continue
-        if v % gcdB == 0:
-            flgB = False
-            break
-    print(gcdA, gcdB)
-    if flgA:
-        answer = gcdA
-    if flgB:
-        answer = max(answer, gcdB)
-    return answer
+    b를 모두 나누면서 a는 못나누는거
+    
+    a의 최대공약수 -> 최대공약수가 나눠지면 그 최대공약수의 약수로 나누기? 
+    하지만 최대공약수로 나눠진다는 거는 그 약수에도 나눠진다는 의미
+    
+    즉, a의 최대공약수로 b를 나눌 수 있는가? or 그 반대 -> 이 과정은 해봐야하는거인듯?
+    나눠지면 0
+    둘중 큰거
+    
+    최대공약수는 어캐구하는가? -> gcd(gcd(gcd(...)))
+    
+    35 // 14 = 2 ... 7
+    14 // 7 = 2 ... 0
+    
+    36 // 14 = 2 ... 8
+    14 // 8 = 1 ... 6
+    8 // 6 = 1 ... 2
+    6 // 2 = 3 ... 0 -> %값이 0이 나올때의 b값
+    '''
+    def gcd(a, b):
+        while a%b != 0:
+            bb = a%b
+            
+            a = b
+            b = bb
+        return b
+    
+    arra.sort(reverse=True)
+    arrb.sort(reverse=True)
+    
+    ga, gb = arra[0], arrb[0]
+    for i in range(1, len(arra)):
+        ga = gcd(ga, arra[i])
+    for i in range(1, len(arrb)):
+        gb = gcd(gb, arrb[i])
+    flaga = True if ga != 1 else False
+    flagb = True if gb != 1 else False
+    
+    if ga != 1:
+        for i in arrb:
+            if i % ga == 0:
+                flaga = False
+                break
+    
+    if gb != 1:
+        for i in arra:
+            if i % gb == 0:
+                flagb = False
+                break
+                
+    if flaga and flagb:
+        return max(ga, gb)
+    elif flaga:
+        return ga
+    elif flagb:
+        return gb
+    else: return 0
