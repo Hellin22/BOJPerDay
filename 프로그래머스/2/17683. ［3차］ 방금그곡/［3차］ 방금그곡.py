@@ -1,80 +1,48 @@
-'''
-음악 제목, 재생이 시작되고 끝난 시각, 악보
-
-음은 C, C#, D, D#, E, F, F#, G, G#, A, A#, B 12개
-
-음악은 항상 처음부터 
--> 만약 음악 길이가 더 길다
--> 음악이 끊김없이 처음부터 반복재생
--> 더 짧다? (음악이 다 재생 못하는것)
--> 처음부터 재생시간 만큼만
-
-조건이 일치하는 음악이 여러 개일 때에는 라디오에서 재생된 시간이 제일 긴 음악 제목을 반환한다. 재생된 시간도 같을 경우 먼저 입력된 음악 제목을 반환한다.
-'''
-
-'''
-musicinfos의 시간만큼 저걸 바꿔야하지 않을까 싶다.
-
-fir, sec, title, music = musicinfos[i].strip().split(",")
-1. fir = int(fir[:2]) * 60 + int(fir[3:])
-    sec = fir과 동일하게 진행
-2. sec-fir을 해서 music를 줄여야할지 늘려야할지 정해야함.
-
-중요한 문자열 비교를 어떻게 할것인가...
-완탐..?
-그래서 조건이 일치한다 -> 재생시간 제일 긴거, idx
-즉, -(sec-fir), idx로 정렬하기
-비어있으면 return
-아니라면 return musicinfos[list[0][1]][2]
-
-"ABCDEFG"
-["12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"]
-'''
-
-
 def solution(m, musicinfos):
-    answer = ''
-    # c#은 하나의 음임
-    # 이걸 먼저 진행해야할듯? 
+    '''
+     C, C#, D, D#, E, F, F#, G, G#, A, A#, B
+     음악시간이 길면 반복재생
+     음악시간이 짧으면 처음부터 그까지
+     
+     여러개 -> 재생 시간이 제일 긴것
+     
+     없으면 (None)
     
-    dt = {
-        "C#": "1", "D#": "2", "F#": "3", "G#": "4", "A#": "5"
-    }
+    m은 네오의 멜로디 문자열
+    음악 시작 시간 / 끝난 시간 / 음악 제목 / 악보 정보
+    재생된 시간 제일 긴 것
+    -> 
+    '''
+    def ch_to_minute(ttime):
+        return int(ttime[:2]) * 60 + int(ttime[3:])
     
-    for sharp, rep in dt.items():
-        m = m.replace(sharp, rep)
+    infos = [] # [시간 차이, 제목, 그만큼의 곡]
     
-    for i in range(len(musicinfos)):
-        fir, sec, title, music = musicinfos[i].strip().split(",")
-        print(fir, sec, title, music)
-        fir = int(fir[:2]) * 60 + int(fir[3:])
-        sec = int(sec[:2]) * 60 + int(sec[3:])
+    def ch_shop(sttr):
+        sttr = sttr.replace("C#", "Z")
+        sttr = sttr.replace("D#", "W")
+        sttr = sttr.replace("F#", "Q")
+        sttr = sttr.replace("G#", "P")
+        sttr = sttr.replace("A#", "O")
+        sttr = sttr.replace("E#", "R")
+        sttr = sttr.replace("B#", "T")
         
-        for sharp, rep in dt.items():
-            music = music.replace(sharp, rep)
-        print(music)
-    
-        # sec-fir보다 짧을 경우를 고려 안해줌.
-        if len(music) > sec-fir:
-            music = music[:sec-fir]
-        else:
-            tmp_music = music
-            music_size = len(music)
-            for j in range((sec-fir)//music_size):
-                music += tmp_music
+        return sttr
         
-            music += tmp_music[:sec-fir-len(music)]
+    # c# d# f# g# a# -> 다른걸로 바꾸기
+    # C D E F G A B
+    # C# -> Z / D# -> W / # F# -> Q / G# -> P / A# -> O
+    m = ch_shop(m)
+    for music in musicinfos:
+        prev, aft, name, gog = music.split(",")
+        time_minus = ch_to_minute(aft) - ch_to_minute(prev)
+        if time_minus <= 0: continue
+        gog = ch_shop(gog)
+        gog = (gog * (time_minus // len(gog) +1))[:time_minus]
         
-        musicinfos[i] = (fir, sec, title, music)
+        if gog.find(m) != -1:
+            infos.append([time_minus, name, gog])
+        
+    infos.sort(key = lambda x: -x[0])
+    return infos[0][1] if len(infos) != 0 else "(None)"
     
-    llist = []
-    for i in range(len(musicinfos)):
-        if m in musicinfos[i][3]:
-            llist.append((-(musicinfos[i][1] - musicinfos[i][0]), musicinfos[i][0], i))
-            # 먼저 입력되었다는게 fir이 작은걸 읨미?
-    
-    if not llist:
-        return "(None)"
-    
-    llist.sort()
-    return musicinfos[llist[0][2]][2]
