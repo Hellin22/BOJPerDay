@@ -1,119 +1,107 @@
-'''
-연산자 우선순위 적용하기
-음수나오면 절대값
-+ - *만 주어짐
-
-'''
-from copy import deepcopy
+from itertools import permutations
 from collections import deque
 def solution(expression):
-    answer = 0
+    '''
+    숫자는 0~999사이 숫자.
+    어떤 우선순위로 하든간에 그걸 어떻게 순서 정해주더라?
+    길이 100이하 문자열
+    3번 반복하면서 해당하는 연산자가 있으면 적용하기?
+    가능할거 같기는 함.
     
-    idx = 0
-    i = 0
-    number_list = []
-    char_list = []
-    
-    r_number_list = []
-    r_char_list = []
-    while True:
-        if i == len(expression): break
-        
-        if expression[i].isdigit():
-            idx = i+1
-            while True:
-                if idx == len(expression): 
-                    break
-                if expression[idx].isdigit():
-                    idx+=1
-                else: break
-            number_list.append(int(expression[i:idx]))
-            i = idx
-            
-        else: # i가 문자임
-            char_list.append(expression[i])
-            i+=1
-    print(number_list)
-    print(char_list)
-    real_number_list = deepcopy(number_list)
-    real_char_list = deepcopy(char_list)
-    
-    cur_pri_ch = []
-    ch_dt = {
-        0 : "*", 1: "+", 2: "-"
-    }
-    visit = [0] * 3
-    
-    def gyesan():
-        nonlocal number_list, char_list
-        number_list = deepcopy(real_number_list)
-        char_list = deepcopy(real_char_list)
-        
-        print("gyesan 시작", number_list)
-        
-        cur = 0 # 현재 우선순위 의미 -> cur_pri_ch[cur]
-        while len(number_list) != 1:
-            # 1개의 숫자만 남는게 아니라면
+    '''
+    maxx = -987654321
+    operator_list = list(permutations(["*", "-", "+"], 3))
+    exp = expression
+    for operator in operator_list:
+        expression = exp
+        for op in operator: # '*', '+', '-'
 
             stck = []
+            new_str = ""
+            if op == "*": # expression에 대해서 *만 찾아서 진행.
+                i, j = 0, 1
+                while i < len(expression) and j < len(expression):
+                    if expression[j] not in ("*", "+", "-"):
+                        j+=1
+                    else: 
+                        # 연산자가 나오면 expression[i:j]는 하나의 숫자를 의미
+                        # 만약 stck[-1]이 우선순위에 있는 연산자라면 연산후 집어넣기
+                        if stck and stck[-1] == "*":
+                            stck.pop()
+                            num = stck.pop()
+                            stck.append(num * int(expression[i:j]))
+                            stck.append(expression[j])
+                        else:
+                            stck.append(int(expression[i:j]))
+                            stck.append(expression[j])
+                        i = j+1
+                        j = i+1
 
-            # 처음꺼를 먼저 넣기
-            stck.append(number_list[0])
-
-            for i in range(1, len(number_list)):
-                # 먼저 char_list 확인하기
-                if char_list[i-1] == cur_pri_ch[cur]:
-                    # 우선순위임.
+                if stck and stck[-1] == "*":
+                    stck.pop()
                     num = stck.pop()
+                    stck.append(int(expression[i:]) * num)
 
-                    if cur_pri_ch[cur] == "+":
-                        stck.append(num + number_list[i])
-                        # stck에 다시 넣어주기
+                else: # 마지막 숫자 집어넣기
+                    stck.append(expression[i:])
 
-                    elif cur_pri_ch[cur] == "-":
-                        stck.append(num - number_list[i])
+            elif op == "+": # expression에 대해서 *만 찾아서 진행.
+                i, j = 0, 1
+                while i < len(expression) and j < len(expression):
+                    if expression[j] not in ("*", "+", "-"):
+                        j+=1
+                    else: 
+                        # 연산자가 나오면 expression[i:j]는 하나의 숫자를 의미
+                        # 만약 stck[-1]이 우선순위에 있는 연산자라면 연산후 집어넣기
+                        if stck and stck[-1] == "+":
+                            stck.pop()
+                            num = stck.pop()
+                            stck.append(num + int(expression[i:j]))
+                            stck.append(expression[j])
+                        else:
+                            stck.append(int(expression[i:j]))
+                            stck.append(expression[j])
+                        i = j+1
+                        j = i+1
 
-                    else:
-                        stck.append(num * number_list[i])
+                if stck and stck[-1] == "+":
+                    stck.pop()
+                    num = stck.pop()
+                    stck.append(int(expression[i:]) + num)
 
-                else: # 우선순위가 아니면 그냥 넣기
-                    stck.append(char_list[i-1])
-                    stck.append(number_list[i])
+                else: # 마지막 숫자 집어넣기
+                    stck.append(expression[i:])
 
+            elif op == "-": # expression에 대해서 *만 찾아서 진행.
+                i, j = 0, 1
+                while i < len(expression) and j < len(expression):
+                    if expression[j] not in ("*", "+", "-"):
+                        j+=1
+                    else: 
+                        # 연산자가 나오면 expression[i:j]는 하나의 숫자를 의미
+                        # 만약 stck[-1]이 우선순위에 있는 연산자라면 연산후 집어넣기
+                        if stck and stck[-1] == "-":
+                            stck.pop()
+                            num = stck.pop()
+                            stck.append(num - int(expression[i:j]))
+                            stck.append(expression[j])
+                        else: # "+", "-"
+                            stck.append(int(expression[i:j]))
+                            stck.append(expression[j])
+                        i = j+1
+                        j = i+1
 
-            cur+=1 # 연산자 우선순위 증가
+                if stck and stck[-1] == "-":
+                    stck.pop()
+                    num = stck.pop()
+                    stck.append(num - int(expression[i:]))
 
-            print("!@3", stck)
+                else: # 마지막 숫자 집어넣기
+                    stck.append(expression[i:])
 
-            number_list = []
-            char_list = []
-            number_list.append(stck[0]) # 처음 숫자 추가
+            for i in stck:
+                new_str += str(i)
+            expression = new_str
 
-            for i in range(1, len(stck), 2):
-                char_list.append(stck[i])
-                number_list.append(stck[i+1])
-
-            print(number_list)
-            print(char_list)
-        return number_list[0]
-    
-    
-    
-    
-    def perm():
-        nonlocal answer
-        if len(cur_pri_ch) == 3:
-            answer = max(answer, abs(gyesan()))
-            return
-        
-        for i in range(3):
-            if visit[i] == 0:
-                cur_pri_ch.append(ch_dt[i])
-                visit[i] = 1
-                perm()
-                cur_pri_ch.pop()
-                visit[i] = 0
-                
-    perm()
-    
-    return answer
+        maxx = max(maxx, abs(int(expression)))
+    return maxx
