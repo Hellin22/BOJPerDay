@@ -1,46 +1,52 @@
 def solution(picks, minerals):
-    answer = 0
+    '''
+    5개를 연속해서 캐야함.
+    그렇다면 하나라도 다이아몬드가 있으면 다이아
+    하나라도 철이 있으면 철
+    아니면 돌
     
-    mineral_list = [0] * 3
-    ml = []
-    for i in range(len(minerals)):
-        if sum(picks)*5 == i: break
+    minerals에서 5개씩 순서대로 캐야함.
+    [다이아, 철, 돌] 0~5 / 6~10 이런식으로 개수를 나눠서 sort
+    '''
+    rock = []
+    p = [0, 0, 0]
+    n = min(sum(picks)*5, len(minerals))
+    print(n)
+    for i in range(n):
         
-        if sum(mineral_list) == 5:
-            # 처리 진행
-            ml_s = mineral_list[:]
-            ml.append(ml_s)
-            mineral_list = [0]*3
-            
         if minerals[i] == "diamond":
-            mineral_list[0]+=1
+            p[0] +=1
         elif minerals[i] == "iron":
-            mineral_list[1]+=1
-        else: mineral_list[2]+=1
-        
-    if mineral_list[0] != 0 or mineral_list[1] != 0 or mineral_list[2] != 0: # 하나라도 0이 아니라면
-        ml.append(mineral_list)
+            p[1] +=1
+        else: p[2] +=1
+
+        if (i+1) % 5 == 0: # 5개씩 해야하니까
+            rock.append(p)
+            p = [0, 0, 0]
+                   
+                   
+    if n % 5 != 0:
+        rock.append(p)
+    rock.sort(key = lambda x: (-x[0], -x[1], -x[2]))
+    rock = rock[::-1]
+    ans = 0
     
-    
-    ml.sort(key = lambda x: (-x[0], -x[1], -x[2]))
-    print(ml)
-    
-    for dia, iron, rock in ml:
-        print(picks)
+    # picks가 minerals를 모두 못파면 이후꺼를 빼줘야함.
+    # 따라서 앞에서부터 그 개수까지만 추가하기
+    while sum(picks) != 0 and rock:
+        a, b, c = rock.pop()
         if picks[0] != 0:
-            answer+= dia+iron+rock
+            ans += a+b+c
             picks[0]-=1
         elif picks[1] != 0:
-            answer += dia*5+iron+rock
+            ans += 5*a + b + c
             picks[1]-=1
-        elif picks[2] != 0:
-            answer+=dia*25 + iron*5 + rock
+        else:
+            ans += 25*a + 5*b+c
             picks[2]-=1
     
+    return ans
+        
+        
+        
     
-    
-    return answer
-
-# 다이아가 하나라도 있다면 다이아가 좋음
-# 철이 하나라도 있다면 철이 좋음
-# 나머지는 돌멩이
