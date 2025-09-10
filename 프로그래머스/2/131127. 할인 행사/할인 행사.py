@@ -4,26 +4,26 @@ def solution(want, number, discount):
     dt = defaultdict()
     for i, j in zip(want, number):
         dt[i] = j
-    
-    l, r = 0, 9
-    for i in range(10):
-        word = discount[i]
-        if word in dt: dt[word]-=1        
     res = 0
-    while r != len(discount):
+    l, r = 0, 9
+    
+    for i in range(9):
+        word = discount[i]
+        if word in dt: dt[word]-=1 
         
-        # 1. dt가 모두 0인지?
+    while r != len(discount):
+        if discount[r] in dt: dt[discount[r]]-=1
+        
+        # 1. dt가 모두 0인지
         flg = True
         for v in dt.values():
             if v != 0:
                 flg = False
                 break
         if flg: res+=1
-        if r == len(discount)-1: break
         
         if discount[l] in dt: dt[discount[l]] += 1
         l, r = l+1, r+1
-        if discount[r] in dt: dt[discount[r]]-=1
     
     return res
     '''
