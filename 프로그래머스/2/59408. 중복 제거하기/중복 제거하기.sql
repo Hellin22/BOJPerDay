@@ -1,5 +1,3 @@
-# 이름 null이면 x, 중복이름은 1개로 (distinct)
-
+-- 코드를 입력하세요
 SELECT COUNT(DISTINCT(NAME))
 FROM ANIMAL_INS
-WHERE NAME IS NOT NULL
