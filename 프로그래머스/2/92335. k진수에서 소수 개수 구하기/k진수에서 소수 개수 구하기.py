@@ -1,44 +1,71 @@
-import math
 def solution(n, k):
-    
     '''
-    n을 k진수로 바꿈 -> 소수가 몇개
-    0이 있으면 안됨.
+    같은 소수라도 다른 소수로 체크
     
-    찾은 수가 소수인지 확인하는법?
-    1. n을 k진수로 바꾸는 함수 change
-    2. 해당 값에서 나온 수의 소수 판별
+    양의 정수 n을 k진수로 바꾸는게 첫번째
+    
+    1. n을 k진수로 변경
+    
+    2. 어떤 값이 0이 아닌 경우 하나의 string으로 쳐야함.
+    -> 0이 나오는 순간 이 값이 10진수로 봤을 때 소수인지 확인
+     
     '''
-    llist = []
-    def change(n, k):
-        while n >= k:
-            llist.append(n%k)
-            n//=k
-        llist.append(n)
-    change(n, k)
+    def ch_to_k(n, k):
+        # n을 k진수로 변경
+        '''
+        11을 3진수
+        102
+        11 / 3 = 3 ... 2
+        3 / 3 = 1 ... 0
+        102 -> n%k가 0이 아니라면 반복'''
+        sttr = ""
+        while n > 0:
+            sttr = str(n % k) + sttr
+            n //= k
+        return sttr
     
-    cnt = 0
-    def is_prime(num):
-        nonlocal cnt
-        if num <= 1: return False
-        for i in range(2, int(math.sqrt(num)+1)):
-            # i로 나눠지는지 확인
-            if num % i == 0:
-                return False
-        cnt+=1
+    sttr = ch_to_k(n, k)
+    count = 0
+    
+    while len(sttr) != 0:
+        tmp_str = ""
+        for i in range(len(sttr)):
+            if sttr[i] != "0":
+                # 0이 아니면 tmp_str에 추가
+                tmp_str += sttr[i]
+            else:
+                # sttr 길이를 줄이기
+                sttr = sttr[i+1:] # i가 0이었기 때문에 i+1부터
+                if tmp_str == "": break
+                
+                # 0이면 tmp_str이 소수인지 검증
+                tmp_int = int(tmp_str)
+                sosu_flag = True
+                for j in range(2, int(tmp_int**(0.5))+1):
+                    if tmp_int % j == 0: # 소수가 아님
+                        sosu_flag = False
+                        break
+                if sosu_flag and tmp_int not in (0, 1):
+                    count+=1
+                tmp_str = ""
+                break
         
-        
-    ss = ''.join(map(str, (llist[::-1])))
-    small_ss = ""
-    for i in range(len(ss)):
-        if ss[i] != '0': small_ss += ss[i]
-        else:
-            # 0이라면
-            if small_ss:
-                is_prime(int(small_ss))
-            small_ss = ""
-    if small_ss:
-        print(small_ss)
-        print(is_prime(int(small_ss)))
-        
-    return cnt
+        if tmp_str == sttr and len(sttr) != 0: # 0이 없는 경우 예외처리
+            
+            tmp_int = int(tmp_str)
+            sosu_flag = True
+            for j in range(2, int(tmp_int**(0.5))+1):                    
+                if tmp_int % j == 0: # 소수가 아님
+                    sosu_flag = False
+                    break
+            if sosu_flag and tmp_int not in (0, 1): 
+                count+=1
+            break
+    
+    return count
+    
+    
+    
+    
+    
+    
