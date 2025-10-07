@@ -31,8 +31,7 @@ for ch in sttr:
             stck.pop()
         tmp_sttr = ""
         for i in range(len(stck)-1, -1, -1):
-            tmp_sttr += stck[i]
+            tmp_sttr = stck[i] + tmp_sttr
             if len(tmp_sttr) == len(bomb): break # 길이 같아지면 종료
-        tmp_sttr = tmp_sttr[::-1]
 
 print(''.join(stck) if stck else "FRULA")
