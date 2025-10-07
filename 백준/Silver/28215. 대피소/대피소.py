@@ -66,5 +66,5 @@ def find_max():
 
     return maxx
 
-dfs(0)
+dfs(-1)
 print(minn if N != K else 0)
