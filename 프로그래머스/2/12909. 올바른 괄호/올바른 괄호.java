@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        Stack<Integer> stck = new Stack<>();
+        Stack<Integer> stck = new Stack<>(); // Stack은 java, 
         
         for(int i = 0; i < s.length(); i++){
             if(s.charAt(i) == '('){
